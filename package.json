@@ -1,0 +1,28 @@
+{
+  "name": "morxv2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest tests/*.test.js --no-watchman",
+    "lint": "eslint '**/*.js' > logs/lintlog",
+    "prettier": "prettier-eslint '**/*.{js,json}' --write",
+    "lintfix": "eslint '**/*.js' --fix > logs/lintlog"
+  },
+  "devDependencies": {
+    "eslint": "6.5.1",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-jest": "22.17.0",
+    "eslint-plugin-promise": "4.2.1",
+    "jest": "24.9.0",
+    "prettier-eslint-cli": "5.0.0"
+  },
+  "keywords": [],
+  "author": "d3",
+  "license": "ISC",
+  "dependencies": {
+    "mosc": "^1.0.0",
+    "validator": "^11.1.0"
+  }
+}
