@@ -64,4 +64,19 @@ describe('Required functionality', () => {
     expect(errorProxy(morx.validate, [testParams, paramSpec, options])).toThrow();
     expect(errorProxy(morx.validate, [testParams, paramSpec, options])).toThrow('An Id is required');
   });
+
+  test('Should throw custom required errors', () => {
+    const paramSpec = morx.spec()
+      .build('id', 'n:1')
+      .end();
+    paramSpec.id.requireErrorMsg = 'An Id is required';
+    const testParams = {
+    };
+    const options = {
+      throwError: true,
+    };
+
+    expect(errorProxy(morx.validate, [testParams, paramSpec, options])).toThrow();
+    expect(errorProxy(morx.validate, [testParams, paramSpec, options])).toThrow('An Id is required');
+  });
 });

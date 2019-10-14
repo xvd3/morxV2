@@ -1,0 +1,1 @@
+Make so we can pass custom error handlers to morx for error throwing
