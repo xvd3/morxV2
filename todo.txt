@@ -1,1 +1,2 @@
 Make so we can pass custom error handlers to morx for error throwing
+Make so validator is available to the custom function and filter during registration
