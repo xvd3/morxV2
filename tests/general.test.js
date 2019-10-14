@@ -38,7 +38,6 @@ describe('Validator functionality', () => {
       interestRate: 45
     };
     const morxResult = morx.validate(testParams, paramSpec);
-    console.log(morxResult);
     expect(morxResult).toHaveProperty('noErrors');
     expect(morxResult).toHaveProperty('params');
     expect(morxResult).toHaveProperty('failedParams');
