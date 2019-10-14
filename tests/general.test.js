@@ -12,7 +12,7 @@ describe('Validator functionality', () => {
     })
     morx.registerValidator('isWithin', (value, max, min) => {
       return ((value * 1) < max) && ((value * 1) > min)
-    })
+    });
     const paramSpec = morx.spec()
       .build('email', 'required:1,validators:isEmail,filters:toUpper')
       .build('fullname', 'required:1,filters:toUpper')
