@@ -19,7 +19,7 @@
     "jest": "24.9.0",
     "prettier-eslint-cli": "5.0.0"
   },
-  "keywords": [],
+  "keywords": ["validation"],
   "author": "d3",
   "license": "ISC",
   "dependencies": {
