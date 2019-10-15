@@ -1,8 +1,6 @@
 const morx = require('../index.js');
-const errorProxy = require('../lib/errorproxy');
 
 describe('Validator functionality', () => {
-
   test('Should successfully extract required, email param and transform to upper case', () => {
     const paramSpec = morx.spec()
       .build('email', 'required:1,filters:toUpper')
@@ -21,9 +19,7 @@ describe('Validator functionality', () => {
   });
 
   test('Should extract required, amount param and transform to double using custom validator', () => {
-    morx.registerFilter('doubleNumericVal', (value) => {
-      return value * 2;
-    })
+    morx.registerFilter('doubleNumericVal', (value) => value * 2);
     const paramSpec = morx.spec()
       .build('amount', 'required:1,filters:doubleNumericVal')
       .end();
@@ -41,17 +37,15 @@ describe('Validator functionality', () => {
   });
 
   test('Should extract required, amount param and transform to an incremented value using custom validator with multiple arguments', () => {
-    morx.registerFilter('incrementBy', (value, incrementValue) => {
-      return (value * 1) + incrementValue;
-    })
+    morx.registerFilter('incrementBy', (value, incrementValue) => (value * 1) + incrementValue);
     const paramSpec = morx.spec()
       .build('amount', 'required:1,filters:incrementBy')
       .end();
     paramSpec.amount.config = {
       incrementBy: {
-        args: [400]
-      }
-    }
+        args: [400],
+      },
+    };
     const testParams = {
       amount: 20,
     };
@@ -64,5 +58,4 @@ describe('Validator functionality', () => {
     expect(morxResult.noErrors).toBe(true);
     expect(morxResult).toHaveProperty('params.amount', 420);
   });
-
 });

@@ -65,21 +65,6 @@ describe('Required functionality', () => {
     expect(errorProxy(morx.validate, [testParams, paramSpec, options])).toThrow('An Id is required');
   });
 
-  test('Should throw custom required errors', () => {
-    const paramSpec = morx.spec()
-      .build('id', 'n:1')
-      .end();
-    paramSpec.id.requireErrorMsg = 'An Id is required';
-    const testParams = {
-    };
-    const options = {
-      throwError: true,
-    };
-
-    expect(errorProxy(morx.validate, [testParams, paramSpec, options])).not.toThrow();
-    expect(errorProxy(morx.validate, [testParams, paramSpec, options])).not.toThrow('An Id is required');
-  });
-
   test('Should not include non-required properties', () => {
     const paramSpec = morx.spec()
       .build('id', 'n:1')
@@ -101,7 +86,7 @@ describe('Required functionality', () => {
       .build('id', 'n:1')
       .end();
     const testParams = {
-      id: '12345'
+      id: '12345',
     };
     const options = {
       throwError: true,
@@ -116,16 +101,16 @@ describe('Required functionality', () => {
     expect(morxResult).toHaveProperty('params.id');
   });
 
-  test('Should contain non-required, passed param', () => {
+  test('Should not contain non-required param name', () => {
     const paramSpec = morx.spec()
       .build('id', 'n:1')
       .build('name', 'required:1')
       .end();
     const testParams = {
-      id: '12345'
+      id: '12345',
     };
     const options = {
-     // throwError: true,
+      // throwError: true,
     };
     const morxResult = morx.validate(testParams, paramSpec, options);
     expect(morxResult).toHaveProperty('noErrors');
@@ -145,10 +130,10 @@ describe('Required functionality', () => {
       .build('name', 'required:1')
       .end();
     const testParams = {
-      id: '12345'
+      id: '12345',
     };
     const options = {
-     throwError: true,
+      throwError: true,
     };
     expect(errorProxy(morx.validate, [testParams, paramSpec, options])).toThrow();
     expect(errorProxy(morx.validate, [testParams, paramSpec, options])).toThrow('name is required');
@@ -161,10 +146,10 @@ describe('Required functionality', () => {
       .end();
     const testParams = {
       id: '12345',
-      name: 'Halima'
+      name: 'Halima',
     };
     const options = {
-     // throwError: true,
+      // throwError: true,
     };
     const morxResult = morx.validate(testParams, paramSpec, options);
     expect(morxResult).toHaveProperty('noErrors');
@@ -176,5 +161,4 @@ describe('Required functionality', () => {
     expect(morxResult).toHaveProperty('params.id', '12345');
     expect(morxResult).toHaveProperty('params.name', 'Halima');
   });
-
 });

@@ -2,7 +2,6 @@ const morx = require('../index.js');
 const errorProxy = require('../lib/errorproxy');
 
 describe('Validator functionality', () => {
-
   test('Should successfully extract required, email param', () => {
     const paramSpec = morx.spec()
       .build('email', 'required:1,validators:isEmail')
@@ -21,9 +20,7 @@ describe('Validator functionality', () => {
   });
 
   test('Should successfully extract required, amount param with custom validator', () => {
-    morx.registerValidator('isLessThan', (value, max) => {
-      return value < max;
-    });
+    morx.registerValidator('isLessThan', (value, max) => value < max);
     const paramSpec = morx.spec()
       .build('amount', 'required:1,validators:isLessThan')
       .end();
@@ -33,9 +30,9 @@ describe('Validator functionality', () => {
     paramSpec.amount.config = {
       isLessThan: {
         args: [300],
-        message: 'Amount should be less than 300'
-      }
-    }
+        message: 'Amount should be less than 300',
+      },
+    };
     const morxResult = morx.validate(testParams, paramSpec);
     expect(morxResult).toHaveProperty('noErrors');
     expect(morxResult).toHaveProperty('params');
@@ -47,9 +44,7 @@ describe('Validator functionality', () => {
   });
 
   test('Should not extract required, amount param with custom validator', () => {
-    morx.registerValidator('isLessThan', (value, max) => {
-      return value < max;
-    });
+    morx.registerValidator('isLessThan', (value, max) => value < max);
     const paramSpec = morx.spec()
       .build('amount', 'required:1,validators:isLessThan')
       .end();
@@ -59,9 +54,9 @@ describe('Validator functionality', () => {
     paramSpec.amount.config = {
       isLessThan: {
         args: [300],
-        message: 'Amount should be less than 300'
-      }
-    }
+        message: 'Amount should be less than 300',
+      },
+    };
     const morxResult = morx.validate(testParams, paramSpec);
     expect(morxResult).toHaveProperty('noErrors');
     expect(morxResult).toHaveProperty('params');
@@ -72,9 +67,7 @@ describe('Validator functionality', () => {
   });
 
   test('Should not extract required, amount param with custom validator accepting two arguments', () => {
-    morx.registerValidator('isWithinRange', (value, max, min) => {
-      return value > min && value < max;
-    });
+    morx.registerValidator('isWithinRange', (value, max, min) => value > min && value < max);
     const paramSpec = morx.spec()
       .build('amount', 'required:1,validators:isWithinRange')
       .end();
@@ -84,9 +77,9 @@ describe('Validator functionality', () => {
     paramSpec.amount.config = {
       isWithinRange: {
         args: [305, 300],
-        message: 'Amount should be between 300 and 305'
-      }
-    }
+        message: 'Amount should be between 300 and 305',
+      },
+    };
     const morxResult = morx.validate(testParams, paramSpec);
     expect(morxResult).toHaveProperty('noErrors');
     expect(morxResult).toHaveProperty('params');
@@ -97,9 +90,7 @@ describe('Validator functionality', () => {
   });
 
   test('Should not extract required, amount param with custom validator accepting two arguments and throw errors', () => {
-    morx.registerValidator('isWithinRange', (value, max, min) => {
-      return value > min && value < max;
-    });
+    morx.registerValidator('isWithinRange', (value, max, min) => value > min && value < max);
     const paramSpec = morx.spec()
       .build('amount', 'required:1,validators:isWithinRange')
       .end();
@@ -107,22 +98,20 @@ describe('Validator functionality', () => {
       amount: 309,
     };
     const options = {
-      throwError: true
-    }
+      throwError: true,
+    };
     paramSpec.amount.config = {
       isWithinRange: {
         args: [305, 300],
-        message: 'Amount should be between 300 and 305'
-      }
-    }
+        message: 'Amount should be between 300 and 305',
+      },
+    };
     const morxResult = errorProxy(morx.validate, [testParams, paramSpec, options]);
     expect(morxResult).toThrow('Amount should be between 300 and 305');
   });
 
   test('Should successfully extract required, amount param with custom validator accepting two arguments', () => {
-    morx.registerValidator('isWithinRange', (value, max, min) => {
-      return value > min && value < max;
-    });
+    morx.registerValidator('isWithinRange', (value, max, min) => value > min && value < max);
     const paramSpec = morx.spec()
       .build('amount', 'required:1,validators:isWithinRange')
       .end();
@@ -132,9 +121,9 @@ describe('Validator functionality', () => {
     paramSpec.amount.config = {
       isWithinRange: {
         args: [305, 300],
-        message: 'Amount should be between 300 and 305'
-      }
-    }
+        message: 'Amount should be between 300 and 305',
+      },
+    };
     const morxResult = morx.validate(testParams, paramSpec);
     expect(morxResult).toHaveProperty('noErrors');
     expect(morxResult).toHaveProperty('params');
@@ -171,9 +160,9 @@ describe('Validator functionality', () => {
       email: 'dddgmail.com',
     };
     const options = {
-      throwError: true
-    }
-    const morxResult = errorProxy(morx.validate, [testParams, paramSpec, options])
+      throwError: true,
+    };
+    const morxResult = errorProxy(morx.validate, [testParams, paramSpec, options]);
     expect(morxResult).toThrow();
     expect(morxResult).toThrow('dddgmail.com failed isEmail validation');
   });
@@ -184,16 +173,16 @@ describe('Validator functionality', () => {
       .end();
     paramSpec.email.config = {
       isEmail: {
-        message: "Email should be valid"
-      }
-    }
+        message: 'Email should be valid',
+      },
+    };
     const testParams = {
       email: 'dddgmail.com',
     };
     const options = {
-      throwError: true
-    }
-    const morxResult = errorProxy(morx.validate, [testParams, paramSpec, options])
+      throwError: true,
+    };
+    const morxResult = errorProxy(morx.validate, [testParams, paramSpec, options]);
     expect(morxResult).toThrow();
     expect(morxResult).toThrow('Email should be valid');
   });
@@ -206,11 +195,10 @@ describe('Validator functionality', () => {
       email: 'ddd@gmail.com',
     };
     const options = {
-      throwError: true
-    }
-    const morxResult = errorProxy(morx.validate, [testParams, paramSpec, options])
+      throwError: true,
+    };
+    const morxResult = errorProxy(morx.validate, [testParams, paramSpec, options]);
     expect(morxResult).not.toThrow();
     expect(morxResult).not.toThrow('dddgmail.com failed isEmail validation');
   });
-
 });
