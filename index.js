@@ -5,13 +5,13 @@ const extractorFunc = require('./lib/paramextractor');
  * If you call morxExport()
  * You get a closure that allows you
  * have contained config for each morx instance you require
- * 
+ *
  * For backward compatibility, we will get default values and set on the
  * export function as well so morx works as it used to
  */
 
 const globalExtractor = extractorFunc();
-function morxExport () {
+function morxExport() {
   const morx = {};
   const extractor = extractorFunc();
   morx.spec = specer.spec;
@@ -19,7 +19,9 @@ function morxExport () {
   morx.registerValidator = extractor.registerValidator;
   morx.registerFilter = extractor.registerFilter;
   morx.setCustomErrorClass = extractor.setCustomErrorClass;
-  morx.getCustom = extractor.getCustom; 
+  morx.getCustom = extractor.getCustom;
+  morx.setErrorThrowerFunction = extractor.setErrorThrowerFunction;
+  morx.getErrorThrower = extractor.getErrorThrower;
   return morx;
 }
 
@@ -29,4 +31,6 @@ morxExport.registerValidator = globalExtractor.registerValidator;
 morxExport.registerFilter = globalExtractor.registerFilter;
 morxExport.setCustomErrorClass = globalExtractor.setCustomErrorClass;
 morxExport.getCustom = globalExtractor.getCustom;
+morxExport.setErrorThrowerFunction = globalExtractor.setErrorThrowerFunction;
+morxExport.getErrorThrower = globalExtractor.getErrorThrower;
 module.exports = morxExport;
