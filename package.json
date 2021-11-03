@@ -24,6 +24,6 @@
   "license": "ISC",
   "dependencies": {
     "mosc": "^1.0.0",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   }
 }
